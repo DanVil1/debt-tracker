@@ -1,7 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, DollarSign, Calendar, TrendingDown } from 'lucide-react';
+
+// --- Constants ---
+const STORAGE_KEY = 'debt-tracker-data';
 
 // --- Types ---
 type Expense = {
@@ -65,6 +68,30 @@ export default function DebtTracker() {
   const [initialDebt, setInitialDebt] = useState<number | ''>('');
   const [isDebtSet, setIsDebtSet] = useState(false);
   const [periods, setPeriods] = useState<Period[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Load data from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        if (data.initialDebt !== undefined) setInitialDebt(data.initialDebt);
+        if (data.isDebtSet !== undefined) setIsDebtSet(data.isDebtSet);
+        if (data.periods !== undefined) setPeriods(data.periods);
+      } catch (e) {
+        console.error('Failed to load saved data:', e);
+      }
+    }
+    setIsLoaded(true);
+  }, []);
+
+  // Save data to localStorage whenever state changes
+  useEffect(() => {
+    if (!isLoaded) return; // Don't save until initial load is complete
+    const data = { initialDebt, isDebtSet, periods };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }, [initialDebt, isDebtSet, periods, isLoaded]);
 
   const handleSetDebt = () => {
     if (typeof initialDebt === 'number' && initialDebt > 0) setIsDebtSet(true);
@@ -131,6 +158,15 @@ export default function DebtTracker() {
     }
     return debt - totalPaidSoFar;
   };
+
+  // Show loading state while hydrating from localStorage
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="text-neutral-500">Loading...</div>
+      </div>
+    );
+  }
 
   // --- INITIAL VIEW ---
   if (!isDebtSet) {
