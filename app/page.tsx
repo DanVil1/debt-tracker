@@ -1,4 +1,4 @@
-import DebtTracker from "./components/DebtTracker";
+import DebtTracker from "./components/debt-tracker/DebtTracker";
 
 export default function Home() {
   return (
