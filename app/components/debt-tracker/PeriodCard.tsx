@@ -30,7 +30,7 @@ export default function PeriodCard({
 
   return (
     <div
-      className={`flex-shrink-0 w-[420px] h-full group relative bg-neutral-900 rounded-2xl border ${
+      className={`flex-shrink-0 w-[500px] h-full group relative bg-neutral-900 rounded-2xl border ${
         isPaidOff ? 'border-emerald-500/30' : 'border-neutral-800'
       } overflow-hidden transition-all hover:border-neutral-700 flex flex-col`}
     >
@@ -88,25 +88,25 @@ export default function PeriodCard({
             <div className="space-y-3 flex-1 overflow-y-auto">
               {period.expenses.map((expense) => (
                 <div key={expense.id} className="flex gap-3 group/expense">
-                  <input
-                    type="text"
-                    value={expense.label}
-                    onChange={(e) => onUpdateExpense(expense.id, 'label', e.target.value)}
-                    className="w-1/2 text-sm bg-transparent border-b border-neutral-800 focus:border-indigo-500 text-neutral-300 outline-none px-1 py-1 transition-colors"
-                  />
-                  <input
-                    type="number"
-                    value={expense.amount || ''}
-                    onChange={(e) => onUpdateExpense(expense.id, 'amount', parseFloat(e.target.value))}
-                    className="w-1/2 text-sm bg-transparent border-b border-neutral-800 focus:border-indigo-500 text-neutral-300 outline-none px-1 py-1 text-right transition-colors"
-                    placeholder="0"
-                  />
                   <button
                     onClick={() => onRemoveExpense(expense.id)}
                     className="text-neutral-700 hover:text-red-400 opacity-0 group-hover/expense:opacity-100 transition-all"
                   >
                     <Trash2 size={14} />
                   </button>
+                  <input
+                    type="text"
+                    value={expense.label}
+                    onChange={(e) => onUpdateExpense(expense.id, 'label', e.target.value)}
+                    className="flex-1 text-sm bg-transparent border-b border-neutral-800 focus:border-indigo-500 text-neutral-300 outline-none px-1 py-1 transition-colors"
+                  />
+                  <input
+                    type="number"
+                    value={expense.amount || ''}
+                    onChange={(e) => onUpdateExpense(expense.id, 'amount', parseFloat(e.target.value))}
+                    className="w-1/3 text-sm bg-transparent border-b border-neutral-800 focus:border-indigo-500 text-neutral-300 outline-none px-1 py-1 text-right transition-colors"
+                    placeholder="0"
+                  />
                 </div>
               ))}
             </div>
