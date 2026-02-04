@@ -89,7 +89,7 @@ export default function DebtTracker() {
 
       {/* Horizontal Timeline */}
       <div className="fixed bottom-0 left-0 right-0 top-[280px] overflow-x-auto overflow-y-hidden px-4 md:px-8">
-        <div className="flex gap-6 h-full pb-6 max-w-5xl mx-auto">
+        <div className="flex gap-6 h-full pb-6">
           {periods.map((period, index) => (
             <PeriodCard
               key={period.id}
