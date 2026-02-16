@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Debt Tracker",
+  title: "Munitorum",
   description: "A simple app to track debts and repayments.",
 };
 
